@@ -1,8 +1,9 @@
-package model;
+package com.example.UserAPI.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,8 +25,12 @@ public class User {
     @Column(columnDefinition = "BINARY(16)")
     private UUID userId;
 
-    @NotBlank(message = "Name is required")
-    private String name;
+//    @NotBlank(message = "Name is required")
+//    private String name;
+
+    @NotBlank
+    @Size(min = 6)
+    private String password;
 
     @Email(message = "Invalid email")
     @NotBlank(message = "Email is required")
@@ -38,6 +43,6 @@ public class User {
     private boolean isActive;
 
     public enum Role {
-        ADMIN, CUSTOMER, MERCHANT
+        ADMIN, USER, MERCHANT
     }
 }

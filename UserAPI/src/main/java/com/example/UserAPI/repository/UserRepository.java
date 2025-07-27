@@ -1,6 +1,6 @@
-package repository;
+package com.example.UserAPI.repository;
 
-import model.User;
+import com.example.UserAPI.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

@@ -1,19 +1,17 @@
-package service;
+package com.example.UserAPI.service;
 
-import DTO.CreateUserRequest;
-import DTO.UserResponse;
-import exception.UserException;
+import com.example.UserAPI.DTO.CreateUserRequest;
+import com.example.UserAPI.DTO.UserResponse;
+import com.example.UserAPI.exception.UserException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import model.User;
+import com.example.UserAPI.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import repository.UserRepository;
+import com.example.UserAPI.repository.UserRepository;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,13 +22,13 @@ public class UserService {
     public UserResponse createUser(CreateUserRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new UserException("Email already registered.");
-
         }
 
         User user = User.builder()
-                .name(request.getName())
+//                .name(request.getName())
                 .email(request.getEmail())
                 .role(request.getRole())
+                .password(request.getPassword())
                 .isActive(false)
                 .build();
 
@@ -62,7 +60,7 @@ public class UserService {
     private UserResponse mapToResponse(User user) {
         return UserResponse.builder()
                 .userId(user.getUserId())
-                .name(user.getName())
+//                .name(user.getName())
                 .email(user.getEmail())
                 .role(user.getRole())
                 .isActive(user.isActive())

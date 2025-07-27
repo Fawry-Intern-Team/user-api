@@ -1,10 +1,10 @@
 package com.example.UserAPI.service;
 
-import DTO.CreateUserRequest;
-import DTO.UserResponse;
-import exception.UserException;
+import com.example.UserAPI.DTO.CreateUserRequest;
+import com.example.UserAPI.DTO.UserResponse;
+import com.example.UserAPI.exception.UserException;
 import jakarta.persistence.EntityNotFoundException;
-import model.User;
+import com.example.UserAPI.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,14 +15,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.data.domain.*;
-import repository.UserRepository;
-import service.UserService;
+import com.example.UserAPI.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.any;
 
 import static org.junit.jupiter.api.Assertions.*;

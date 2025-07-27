@@ -1,24 +1,29 @@
-package DTO;
+package com.example.UserAPI.DTO;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import model.User.Role;
+import com.example.UserAPI.model.User.Role;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class CreateUserRequest {
-    @NotBlank(message = "Name is required")
-    private String name;
+//    @NotBlank(message = "Name is required")
+//    private String name;
 
     @Email(message = "Invalid email")
     @NotBlank(message = "Email is required")
     private String email;
+
+    @NotBlank
+    @Size(min = 6)
+    private String password;
 
     private Role role;
 }

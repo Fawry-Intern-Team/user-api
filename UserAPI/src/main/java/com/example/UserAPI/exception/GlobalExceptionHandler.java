@@ -1,4 +1,4 @@
-package exception;
+package com.example.UserAPI.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;

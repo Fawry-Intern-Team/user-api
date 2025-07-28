@@ -1,5 +1,6 @@
 package com.example.UserAPI.DTO;
 
+import com.example.UserAPI.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -7,7 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.example.UserAPI.model.User.Role;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,5 +27,5 @@ public class CreateUserRequest {
     @Size(min = 6)
     private String password;
 
-    private Role role;
+    private List<Role> roles;
 }

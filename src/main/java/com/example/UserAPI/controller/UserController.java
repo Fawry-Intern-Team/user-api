@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -27,6 +28,11 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
         return ResponseEntity.ok(userService.createUser(request));
+    }
+
+    @GetMapping("/by-email")
+    public ResponseEntity<?> getUserByEmail(@RequestParam String email){
+        return ResponseEntity.ok(userService.getUserByEmail(email));
     }
 
     @Operation(summary = "Activate a user")

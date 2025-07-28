@@ -1,6 +1,7 @@
 package com.example.UserAPI.service;
 
 import com.example.UserAPI.DTO.CreateUserRequest;
+import com.example.UserAPI.DTO.UserDTO;
 import com.example.UserAPI.DTO.UserResponse;
 import com.example.UserAPI.exception.UserException;
 import jakarta.persistence.EntityNotFoundException;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import com.example.UserAPI.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.UserAPI.repository.UserRepository;
 
@@ -27,7 +29,7 @@ public class UserService {
         User user = User.builder()
 //                .name(request.getName())
                 .email(request.getEmail())
-                .role(request.getRole())
+                .roles(request.getRoles())
                 .password(request.getPassword())
                 .isActive(false)
                 .build();
@@ -62,8 +64,20 @@ public class UserService {
                 .userId(user.getUserId())
 //                .name(user.getName())
                 .email(user.getEmail())
-                .role(user.getRole())
+                .roles(user.getRoles())
                 .isActive(user.isActive())
                 .build();
+    }
+
+    public UserDTO getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if(user != null) {
+            return UserDTO.builder()
+                    .email(user.getEmail())
+                    .password(user.getPassword())
+                    .roles(user.getRoles())
+                    .build();
+        }
+        throw new UserException("Email doesn't exist");
     }
 }

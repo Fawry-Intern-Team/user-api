@@ -1,5 +1,6 @@
 package com.example.UserAPI.model;
 
+import com.example.UserAPI.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -20,9 +22,7 @@ import java.util.UUID;
 @Builder
 public class User {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID userId;
 
 //    @NotBlank(message = "Name is required")
@@ -37,12 +37,10 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private List<Role> roles;
 
     private boolean isActive;
-
-    public enum Role {
-        ADMIN, USER, MERCHANT
-    }
 }

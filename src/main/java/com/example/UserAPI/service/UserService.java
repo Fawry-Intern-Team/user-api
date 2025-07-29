@@ -3,6 +3,7 @@ package com.example.UserAPI.service;
 import com.example.UserAPI.DTO.CreateUserRequest;
 import com.example.UserAPI.DTO.UserDTO;
 import com.example.UserAPI.DTO.UserResponse;
+import com.example.UserAPI.enums.Role;
 import com.example.UserAPI.exception.UserException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.UserAPI.repository.UserRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -29,7 +31,7 @@ public class UserService {
         User user = User.builder()
 //                .name(request.getName())
                 .email(request.getEmail())
-                .roles(request.getRoles())
+                .roles(request.getRoles() == null ? List.of(Role.USER) : request.getRoles())
                 .password(request.getPassword())
                 .isActive(false)
                 .build();
@@ -64,20 +66,15 @@ public class UserService {
                 .userId(user.getUserId())
 //                .name(user.getName())
                 .email(user.getEmail())
-                .roles(user.getRoles())
+                .roles(user.getRoles() == null ? List.of(Role.USER) : user.getRoles())
                 .isActive(user.isActive())
                 .build();
     }
 
-    public UserDTO getUserByEmail(String email) {
+    public UserResponse getUserByEmail(String email) {
         User user = userRepository.findByEmail(email);
-        if(user != null) {
-            return UserDTO.builder()
-                    .email(user.getEmail())
-                    .password(user.getPassword())
-                    .roles(user.getRoles())
-                    .build();
-        }
+        if(user != null)
+            return mapToResponse(user);
         throw new UserException("Email doesn't exist");
     }
 }

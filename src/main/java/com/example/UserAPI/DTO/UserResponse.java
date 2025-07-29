@@ -11,7 +11,6 @@ import java.util.UUID;
 @Builder
 public class UserResponse {
     private UUID userId;
-//    private String name;
     private String email;
     private List<Role> roles;
     private boolean isActive;

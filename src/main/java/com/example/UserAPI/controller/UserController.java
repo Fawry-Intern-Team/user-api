@@ -1,12 +1,12 @@
 package com.example.UserAPI.controller;
 
 import com.example.UserAPI.DTO.CreateUserRequest;
-import com.example.UserAPI.DTO.UserResponse;
+import com.example.UserAPI.DTO.UserLoginDTO;
+import com.example.UserAPI.DTO.UserResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -26,30 +26,30 @@ public class UserController {
    
     @Operation(summary = "Create a new user")
     @PostMapping
-    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody CreateUserRequest request) {
         return ResponseEntity.ok(userService.createUser(request));
     }
 
-    @GetMapping("/by-email")
-    public ResponseEntity<?> getUserByEmail(@RequestParam String email){
-        return ResponseEntity.ok(userService.getUserByEmail(email));
+    @PostMapping("/login")
+    public ResponseEntity<?> verifyUserByEmail(@RequestBody UserLoginDTO user){
+        return ResponseEntity.ok(userService.verifyUserByEmail(user));
     }
 
     @Operation(summary = "Activate a user")
     @PutMapping("/{id}/activate")
-    public ResponseEntity<UserResponse> activate(@PathVariable UUID id) {
+    public ResponseEntity<UserResponseDTO> activate(@PathVariable UUID id) {
         return ResponseEntity.ok(userService.activateUser(id));
     }
 
     @Operation(summary = "Deactivate a user")
     @PutMapping("/{id}/deactivate")
-    public ResponseEntity<UserResponse> deactivate(@PathVariable UUID id) {
+    public ResponseEntity<UserResponseDTO> deactivate(@PathVariable UUID id) {
         return ResponseEntity.ok(userService.deactivateUser(id));
     }
 
     @Operation(summary = "Get all users with pagination")
     @GetMapping
-    public ResponseEntity<Page<UserResponse>> listUsers(
+    public ResponseEntity<Page<UserResponseDTO>> listUsers(
             @PageableDefault(size = 10, sort = "name") Pageable pageable) {
         return ResponseEntity.ok(userService.getAllUsers(pageable));
     }

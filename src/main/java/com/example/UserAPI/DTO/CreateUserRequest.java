@@ -16,8 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CreateUserRequest {
-//    @NotBlank(message = "Name is required")
-//    private String name;
+    @NotBlank(message = "First name is required")
+    private String firstName;
+
+    @NotBlank(message = "Last name is required")
+    private String lastName;
 
     @Email(message = "Invalid email")
     @NotBlank(message = "Email is required")
